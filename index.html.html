@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа №8</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        input {
+            padding: 8px;
+            margin: 5px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: #f4f4f4;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Список пользователей</h2>
+    <ul id="userList"></ul>
+
+    <h3>Добавить нового пользователя</h3>
+    <input type="text" id="nameInput" placeholder="Имя" />
+    <input type="number" id="ageInput" placeholder="Возраст" />
+    <input type="text" id="cityInput" placeholder="Город" />
+    <button id="addButton">Добавить пользователя</button>
+
+    <script>
+        // ---------- 1. Работа с массивами чисел ----------
+        console.log("=== Массив чисел ===");
+        let numbers = [10, 20, 30, 40];              // создали массив чисел
+        console.log("Исходный массив:", numbers);
+
+        // 2. Добавляем новое число в массив
+        numbers.push(50);
+        console.log("После push(50):", numbers);
+
+        // 3. Перебираем массив и выводим каждый элемент отдельно (цикл for)
+        console.log("Перебор через for:");
+        for (let i =  0; i < numbers.length; i++) {
+            console.log("Элемент", i, ":", numbers[i]);
+        }
+
+        // Перебор через forEach
+        console.log("Перебор через forEach:");
+        numbers.forEach(function(num, index) {
+            console.log(`numbers[${index}] = ${num}`);
+        });
+
+        // ---------- 4. Объект «Пользователь» ----------
+        console.log("\n=== Объект пользователя ===");
+        let singleUser = {
+            name: "Анна",
+            age: 22,
+            city: "Казань"
+        };
+        console.log("Объект user:", singleUser);
+        console.log("Имя:", singleUser.name);
+        console.log("Возраст:", singleUser.age);
+        console.log("Город:", singleUser.city);
+
+        // ---------- 5. Массив пользователей ----------
+        let users = [
+            { name: "Иван", age: 20, city: "Москва" },
+            { name: "Мария", age: 25, city: "Санкт-Петербург" },
+            { name: "Петр", age: 30, city: "Новосибирск" }
+        ];
+        console.log("Массив пользователей:", users);
+
+        // ---------- 6. Вывод списка пользователей на страницу ----------
+        const userListElement = document.getElementById("userList");
+
+        function renderUserList() {
+            // Очищаем список перед обновлением
+            userListElement.innerHTML = "";
+
+            // Перебираем массив и формируем пункты списка
+            users.forEach(function(user) {
+                const li = document.createElement("li");
+                li.textContent = `${user.name}, ${user.age} лет, г. ${user.city}`;
+                userListElement.appendChild(li);
+            });
+        }
+
+        // Первоначальный рендер
+        renderUserList();
+
+        // ---------- 7. Кнопка «Добавить пользователя» ----------
+        document.getElementById("addButton").addEventListener("click", function() {
+            // Получаем значения из полей ввода
+            const name = document.getElementById("nameInput").value.trim();
+            const age = document.getElementById("ageInput").value.trim();
+            const city = document.getElementById("cityInput").value.trim();
+
+            // Простейшая валидация
+            if (name === "" || age === "" || city === "") {
+                alert("Пожалуйста, заполните все поля!");
+                return;
+            }
+
+            // Создаём объект нового пользователя
+            const newUser = {
+                name: name,
+                age: Number(age),  // преобразуем в число
+                city: city
+            };
+
+            // Добавляем объект в массив
+            users.push(newUser);
+
+            // Обновляем список на странице
+            renderUserList();
+
+            // Очищаем поля ввода
+            document.getElementById("nameInput").value = "";
+            document.getElementById("ageInput").value = "";
+            document.getElementById("cityInput").value = "";
+
+            // Для наглядности выводим массив в консоль
+            console.log("Обновлённый массив users:", users);
+        });
+    </script>
+
+</body>
+</html>
